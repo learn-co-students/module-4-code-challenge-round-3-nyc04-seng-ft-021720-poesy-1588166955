@@ -14,6 +14,13 @@ class Poem extends React.Component {
     console.log(this.state)
   }
 
+  deletePoem = () => {
+    fetch('http://localhost:6001/poems' + '/' + this.props.poem.id, {
+      method: 'delete'
+    })
+    .then(response => response.json());
+  }
+
   render() {
     console.log(this.props.poem)
     if(!this.props.favoritesView || this.state.favorite) {return (
@@ -25,6 +32,7 @@ class Poem extends React.Component {
         </p>
         <button name="read" value={this.state.read} onClick={this.toggle}>{(this.state.read) ? "Mark as unread" : "Mark as read"}</button>
         <button name="favorite" value={this.state.favorite} onClick={this.toggle}>{(this.state.favorite) ? "Remove from Favorites" : "Add to Favorites"}</button>
+        <button onClick={this.deletePoem}> Delete Poem </button>
       </div>
     );
   } else {

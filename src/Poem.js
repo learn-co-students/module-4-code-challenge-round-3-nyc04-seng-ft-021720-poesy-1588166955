@@ -14,11 +14,11 @@ class Poem extends React.Component {
 
   render() {
     console.log(this.props.poem)
-    let button
+    let readButton
     if(this.state.read){
-      button = <button onClick={this.toggleRead}>Mark as unread</button>
+      readButton = <button onClick={this.toggleRead}>Mark as unread</button>
     } else {
-      button = <button onClick={this.toggleRead}>Mark as read</button>
+      readButton = <button onClick={this.toggleRead}>Mark as read</button>
     }
     return (
       <div>
@@ -27,7 +27,7 @@ class Poem extends React.Component {
         <p>
           <strong>- By {this.props.poem.author}</strong>
         </p>
-        {button}
+        {readButton}
       </div>
     );
   }

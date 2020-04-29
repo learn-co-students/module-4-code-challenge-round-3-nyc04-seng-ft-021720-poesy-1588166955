@@ -2,15 +2,24 @@ import React from "react";
 import Poem from "./Poem";
 
 class PoemsContainer extends React.Component {
-  render() {
-    return (
-      <div className="poems-container">
-        {
-          // render poems here
-        }
-      </div>
-    );
-  }
+    
+    renderPoemObjs = () => {
+        return this.props.poemObjs.map(poemObj => {
+            return <Poem key={poemObj.id} poemObj={poemObj} /> 
+        })
+    }
+
+    render() {
+        // console.log(this.props.poemObjs)
+        return (
+        <div className="poems-container">
+            {this.renderPoemObjs()}
+        </div>
+        );
+    }
 }
 
 export default PoemsContainer;
+
+
+

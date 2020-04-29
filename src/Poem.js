@@ -2,12 +2,14 @@ import React from "react";
 
 class Poem extends React.Component {
   state = {
-    read: false
+    read: false,
+    favorite: false
   }
 
-  toggleRead = () => {
+  toggle = (event) => {
+    const jankyBoolean = (event.target.value === false || event.target.value === "false")
     this.setState({
-      read: !this.state.read
+      [event.target.name]: jankyBoolean
     })
     console.log(this.state)
   }
@@ -15,12 +17,18 @@ class Poem extends React.Component {
   render() {
     console.log(this.props.poem)
     let readButton
+    let favoriteButton
     if(this.state.read){
-      readButton = <button onClick={this.toggleRead}>Mark as unread</button>
+      readButton = <button name="read" value={this.state.read} onClick={this.toggle}>Mark as unread</button>
     } else {
-      readButton = <button onClick={this.toggleRead}>Mark as read</button>
+      readButton = <button name="read" value={this.state.read} onClick={this.toggle}>Mark as read</button>
     }
-    if(!this.props.favoritesView) {return (
+    if(this.state.favorite){
+      favoriteButton = <button name="favorite" value={this.state.favorite} onClick={this.toggle}>Remove from Favorites</button>
+    } else {
+      favoriteButton = <button name="favorite" value={this.state.favorite} onClick={this.toggle}>Add to Favorites</button>
+    }
+    if(!this.props.favoritesView || this.state.favorite) {return (
       <div>
         <h3>{this.props.poem.title}</h3>
         <p>{this.props.poem.content}</p>
@@ -28,6 +36,7 @@ class Poem extends React.Component {
           <strong>- By {this.props.poem.author}</strong>
         </p>
         {readButton}
+        {favoriteButton}
       </div>
     );
   } else {

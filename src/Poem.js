@@ -20,7 +20,7 @@ class Poem extends React.Component {
     } else {
       readButton = <button onClick={this.toggleRead}>Mark as read</button>
     }
-    return (
+    if(!this.props.favoritesView) {return (
       <div>
         <h3>{this.props.poem.title}</h3>
         <p>{this.props.poem.content}</p>
@@ -30,7 +30,11 @@ class Poem extends React.Component {
         {readButton}
       </div>
     );
+  } else {
+    return (
+      <></>
+    )
   }
-}
+}}
 
 export default Poem;

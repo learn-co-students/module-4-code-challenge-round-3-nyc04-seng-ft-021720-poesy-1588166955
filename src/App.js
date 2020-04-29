@@ -6,7 +6,20 @@ import NewPoemForm from "./NewPoemForm";
 class App extends React.Component {
 
   state={
-    form: false
+    form: false,
+    poems: []
+  }
+
+  componentDidMount() {
+    fetch("http://localhost:6001/poems")
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState({
+            poems: result
+          })
+        }
+      )
   }
 
   toggleForm = () => {
@@ -15,10 +28,19 @@ class App extends React.Component {
     })
   }
 
+  renderNew = (poem) => {
+    console.log(poem)
+    const newArray = this.state.poems
+    newArray.push(poem)
+    this.setState({
+      poems: newArray
+    })
+  }
+
   render() {
     let formRender
     if(this.state.form){
-      formRender = <NewPoemForm />
+      formRender = <NewPoemForm renderNew={this.renderNew}/>
     } else {
       formRender = <br/>
     }
@@ -28,7 +50,7 @@ class App extends React.Component {
           <button onClick={this.toggleForm}>Show/hide new poem form</button>
           {formRender}
         </div>
-        <PoemsContainer />
+        <PoemsContainer poems={this.state.poems}/>
       </div>
     );
   }

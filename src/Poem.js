@@ -3,7 +3,8 @@ import React from "react";
 class Poem extends React.Component {
   state = {
     read: false,
-    favorite: false
+    favorite: false,
+    deleted: false
   }
 
   toggle = (event) => {
@@ -18,12 +19,13 @@ class Poem extends React.Component {
     fetch('http://localhost:6001/poems' + '/' + this.props.poem.id, {
       method: 'delete'
     })
-    .then(response => response.json());
+    .then(response => response.json())
+    .then( this.setState({deleted:true}))
   }
 
   render() {
     console.log(this.props.poem)
-    if(!this.props.favoritesView || this.state.favorite) {return (
+    if(!this.state.deleted && (!this.props.favoritesView || this.state.favorite)) {return (
       <div>
         <h3>{this.props.poem.title}</h3>
         <p>{this.props.poem.content}</p>

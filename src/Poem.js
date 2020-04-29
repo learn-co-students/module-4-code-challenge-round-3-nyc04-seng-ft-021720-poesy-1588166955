@@ -16,18 +16,6 @@ class Poem extends React.Component {
 
   render() {
     console.log(this.props.poem)
-    let readButton
-    let favoriteButton
-    if(this.state.read){
-      readButton = <button name="read" value={this.state.read} onClick={this.toggle}>Mark as unread</button>
-    } else {
-      readButton = <button name="read" value={this.state.read} onClick={this.toggle}>Mark as read</button>
-    }
-    if(this.state.favorite){
-      favoriteButton = <button name="favorite" value={this.state.favorite} onClick={this.toggle}>Remove from Favorites</button>
-    } else {
-      favoriteButton = <button name="favorite" value={this.state.favorite} onClick={this.toggle}>Add to Favorites</button>
-    }
     if(!this.props.favoritesView || this.state.favorite) {return (
       <div>
         <h3>{this.props.poem.title}</h3>
@@ -35,8 +23,8 @@ class Poem extends React.Component {
         <p>
           <strong>- By {this.props.poem.author}</strong>
         </p>
-        {readButton}
-        {favoriteButton}
+        <button name="read" value={this.state.read} onClick={this.toggle}>{(this.state.read) ? "Mark as unread" : "Mark as read"}</button>
+        <button name="favorite" value={this.state.favorite} onClick={this.toggle}>{(this.state.favorite) ? "Remove from Favorites" : "Add to Favorites"}</button>
       </div>
     );
   } else {

@@ -1,15 +1,34 @@
 import React from "react";
 
 class Poem extends React.Component {
+
+  state = {
+    markRead: true
+  }
+
+  handleRead = () => {
+    this.setState({
+      markRead: !this.state.markRead
+    })
+  }
+
+
   render() {
+
+    let {title, content, author} = this.props.poem
+
+
     return (
       <div>
-        <h3>Title</h3>
-        <p>Content</p>
+        <h3>{title}</h3>
+        <p>{content}</p>
         <p>
-          <strong>- By Author</strong>
+          <strong>- By {author}</strong>
         </p>
-        <button>Mark as read</button>
+        <button onClick= {this.handleRead}>
+          {this.state.markRead ? "Mark as read" : "Mark as unread"
+           }
+      </button>
       </div>
     );
   }

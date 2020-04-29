@@ -23,6 +23,9 @@ class Poem extends React.Component {
             <button onClick={this.toggleRead}>
                 {this.state.markRead ? "Mark as unread" : "Mark as read"}
             </button>
+            <button onClick={() => this.props.deletePoem(id)}>
+                Delete Poem
+            </button>
         </div>
         );
     }

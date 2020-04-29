@@ -23,7 +23,7 @@ class App extends React.Component {
     }
 
     submitNewPoem = (poemObj) => {
-        console.log(poemObj)
+        // console.log(poemObj)
         fetch("http://localhost:6001/poems", {
             method: "POST",
             headers: {
@@ -39,14 +39,33 @@ class App extends React.Component {
         })
     }
 
+    deletePoem = (poemId) => {
+        // console.log(poemId)
+        fetch(`http://localhost:6001/poems/${poemId}`, {
+            method: "DELETE"
+        })
+        .then(response => response.json())
+        .then(() => {
+            this.setState(prevState => {
+                const updatesPoemObjs = prevState.poemObjs.filter(poemObj => {
+                    return poemObj.id !== poemId
+                })
+                return {
+                    poemObjs: updatesPoemObjs
+                }
+            })
+        })
+    }
+
     render() {
         return (
         <div className="app">
             <div className="sidebar">
             <button onClick={this.toggleNewPoemForm}>Show/hide new poem form</button>
             {this.state.showNewPoemForm ? <NewPoemForm submitNewPoem={this.submitNewPoem}/> : null}
+            
             </div>
-            <PoemsContainer poemObjs={this.state.poemObjs}/>
+            <PoemsContainer poemObjs={this.state.poemObjs} deletePoem={this.deletePoem}/>
         </div>
         );
     }
@@ -56,6 +75,6 @@ export default App;
 
 
 
-//          PoemsContainer < Poem
-//  APP <
-//          NewPoemForm
+//       /  PoemsContainer < Poem
+//  APP <-  Favorites
+//       \  NewPoemForm
